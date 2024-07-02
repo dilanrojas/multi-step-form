@@ -161,6 +161,7 @@ const { title } = Astro.props;
 		min-height: 100dvh;
 		background-color: var(--magnolia);
 		position: relative;
+		overflow: hidden;
 	}
 
 	/* Contents */
@@ -171,6 +172,10 @@ const { title } = Astro.props;
 	}
 
 	@media(width <= 780px) {
+		body {
+			overflow: auto;
+		}
+		
 		.active-page {
 			width: 410px;
 			height: 410px;
