@@ -1,0 +1,153 @@
+<div class="step-page step-1 active-page">
+  <div class="step-title">
+    <h1>Personal info</h1>
+    <p>Please provide your name, email address, and phone number.</p>
+  </div>
+  <div class="step-main flow" style="--flow-space: 1.5em">
+    <form action="get-name">
+      <label for="input-name">Name</label>
+      <input name="input-name" id="input-name" type="text" placeholder="e.g. Stephen King">
+
+      <span class="name-required required">This field is required</span>
+    </form>
+    <form action="get-email">
+      <label for="input-email">Email Address</label>
+      <input name="input-email" id="input-email" type="text" placeholder="e.g. stephening@lorem.com">
+
+      <span class="email-required required">This field is required</span>
+    </form>
+    <form action="get-phone">
+      <label for="input-phone">Phone Number</label>
+      <input name="input-phone" id="input-phone" type="text" placeholder="e.g. +1 234 567 890">
+
+      <span class="phone-required required">This field is required</span>
+    </form>
+  </div>
+  
+</div>
+
+<style>
+  .step-1 {
+    display: none;
+  }
+  
+  .step-title {
+    margin-bottom: 2.8em;
+  }
+
+  .step-title h1 {
+    color: var(--marine-blue);
+    font-size: 2em;
+    margin-bottom: .3em;
+  }
+
+  .step-title p {
+    color: var(--darker);
+  }
+
+  .step-main > form {
+    display: flex;
+    flex-direction: column;
+    gap: .4em;
+  }
+
+  label {
+    color: var(--marine-blue)
+  }
+  
+  input {
+    color: var(--dark);
+    appearance: none;
+    border: 1px solid var(--darker);
+    padding: .8em;
+    border-radius: 7px
+  }
+
+  input:focus {
+    outline: none;
+    border: 1px solid var(--dark);
+  }
+
+  input::placeholder {
+    color: var(--darker);
+  }
+
+  input[valid] {
+    background-color: hsla(132, 84%, 57%, 0.074)
+  }
+
+  input[invalid] {
+    background-color: hsla(354, 84%, 57%, 0.062);
+  }
+
+  form {
+    position: relative;
+  }
+
+  .required {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #be475a;
+    font-size: .95rem;
+    font-weight: 500;
+  }
+
+</style>
+
+<script>
+  const emailInput = document.getElementById("input-email") as HTMLInputElement
+  const emailRequired = document.querySelector(".email-required") as HTMLElement
+
+  const nameInput = document.getElementById("input-name") as HTMLInputElement
+  const nameRequired = document.querySelector(".name-required") as HTMLElement
+
+  const phoneInput = document.getElementById("input-phone") as HTMLInputElement
+  const phoneRequired = document.querySelector(".phone-required") as HTMLElement
+
+  const nextBtn = document.querySelector(".button-next")
+
+  nextBtn.setAttribute("disabled", "")
+  const inputs = [emailInput, nameInput, phoneInput];
+
+  function validInput(field, required) {
+    field.setAttribute("valid", "")
+    field.removeAttribute("invalid")
+    required.style.display = "none"
+    if (inputs.every(input => input.hasAttribute("valid"))) {
+      nextBtn.removeAttribute("disabled")
+    }
+  }
+
+  function invalidInput(field, required) {
+    field.setAttribute("invalid", "")
+    field.removeAttribute("valid")
+    required.style.display = "block"
+    nextBtn.setAttribute("disabled", "")
+  }
+
+  nameInput.addEventListener("keyup", () => {
+    if (!nameInput.value.match(/^[a-zA-Z\s]+$/)) {
+      invalidInput(nameInput, nameRequired)
+    } else {
+      validInput(nameInput, nameRequired)
+    }
+  })
+
+  emailInput.addEventListener("keyup", () => {
+  if (!emailInput.value.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+    invalidInput(emailInput, emailRequired);
+  } else {
+    validInput(emailInput, emailRequired);
+  }
+
+  phoneInput.addEventListener("keyup", () => {
+    if (!phoneInput.value.match(/^[1-9]\d*$/)) {
+      invalidInput(phoneInput, phoneRequired)
+    } else {
+      validInput(phoneInput, phoneRequired)
+    }
+  })
+})
+</script>

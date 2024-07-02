@@ -1,0 +1,39 @@
+{
+  "plans": {
+    "monthly": {
+      "arcade": {
+        "price": "$9"
+      },
+      "advanced": {
+        "price": "$12"
+      },
+      "pro": {
+        "price": "$15"
+      }
+    },
+    "yearly": {
+      "arcade": {
+        "price": "$90"
+      },
+      "advanced": {
+        "price": "$120"
+      },
+      "pro": {
+        "price": "$150"
+      }
+    },
+    "offer": "2 months free"
+  },
+  "addOns": {
+    "monthly": {
+      "onlineService": "$1/mo",
+      "largerStorage": "$2/mo",
+      "customizableProfile": "$2/mo"
+    },
+    "yearly": {
+      "onlineService": "$10/yr",
+      "largerStorage": "$20/yr",
+      "customizableProfile": "$20/yr"
+    }
+  }
+}

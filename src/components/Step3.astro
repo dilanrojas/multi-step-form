@@ -1,0 +1,132 @@
+<div class="step-page step-3">
+  <div class="step-title">
+    <h1>Pick add-ons</h1>
+    <p>Add-ons help enhance your gaming experience</p>
+  </div>
+  <div class="step-main">
+    <div class="add-on-card online-service-card">
+      <div class="checkbox-wrapper">
+        <input id="online-checkbox" type="checkbox">
+      </div>
+      <div class="add-on-content">
+        <h1>Online service</h1>
+        <p>Access to multiplayer games</p>
+      </div>
+      <div class="add-on-price-wrapper">
+        <p>+</p>
+        <span class="online-service-price"></span>
+      </div>
+    </div>
+    <div class="add-on-card larger-storage-card">
+      <div class="checkbox-wrapper">
+        <input id="larger-storage-checkbox" type="checkbox">
+      </div>
+      <div class="add-on-content">
+        <h1>Larger storage</h1>
+        <p>Extra 1TB of cloud save</p>
+      </div>
+      <div class="add-on-price-wrapper">
+        <p>+</p>
+        <span class="larger-storage-price"></span>
+      </div>
+    </div>
+    <div class="add-on-card customizable-profile-card">
+      <div class="checkbox-wrapper">
+        <input id="customizable-profile-checkbox" type="checkbox">
+      </div>
+      <div class="add-on-content">
+        <h1>Customizable profile</h1>
+        <p>Custom theme on your profile</p>
+      </div>
+      <div class="add-on-price-wrapper">
+        <p>+</p>
+        <span class="customizable-profile-price"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-3 {
+    display: none;
+  }
+  
+  .step-title {
+    margin-bottom: 2.8em;
+  }
+
+  .step-title h1 {
+    color: var(--marine-blue);
+    font-size: 2em;
+    margin-bottom: .3em;
+  }
+
+  .step-title p {
+    color: var(--darker);
+  }
+  
+  .step-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .add-on-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.1em;
+    padding: 1.1em;
+    border: 1px solid var(--marine-blue);
+    border-radius: 10px;
+    transition: background-color .15s ease;
+  }
+
+  .add-on-card[aria-checked] {
+    background-color: #f8f9fe;
+  }
+
+  .add-on-content h1 {
+    font-size: 1rem;
+    color: var(--marine-blue);
+    margin-bottom: .2em;
+  }
+
+  .add-on-content p {
+    color: var(--darker);
+  }
+
+  @media(width <= 520px) {
+    .add-on-card {
+      font-size: .8em;
+    }
+  }
+
+  .add-on-price-wrapper {
+    display: flex;
+    color: var(--purplish-blue)
+  }
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+  
+  input[type="checkbox"]:checked {
+    accent-color: var(--purplish-blue);
+  }
+
+  input[type="checkbox"]:checked:hover {
+    accent-color: var(--purplish-blue);
+  }
+</style>
+
+<script>
+  const checksBox = document.querySelectorAll("input")
+
+  checksBox.forEach(checkbox => {
+    checkbox.addEventListener("click", () => {
+      checkbox.parentElement.parentElement.toggleAttribute("aria-checked")
+    })
+  })
+</script>

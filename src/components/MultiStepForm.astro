@@ -1,0 +1,73 @@
+---
+import FormStepsList from "./FormStepsList.astro"
+import FormNav from "./FormNav.astro"
+import Step1 from "./Step1.astro"
+import Step2 from "./Step2.astro"
+import Step3 from "./Step3.astro"
+import Step4 from "./Step4.astro"
+import Thanks from "./Thanks.astro"
+---
+
+
+<section class="multi-step-form container">
+  <div class="form-wrapper">
+
+    <FormStepsList />
+
+    <div class="step-content">
+      <Step1 />
+      <Step2 />
+      <Step3 />
+      <Step4 />
+
+      <Thanks />
+
+      <FormNav  />
+    </div>
+
+
+  </div>
+</section>
+
+<style>
+  .multi-step-form {
+    display: flex;
+    justify-content: center;
+    width: auto;
+  }
+
+  .form-wrapper {
+    background-color: var(--white);
+    width: fit-content;
+    border-radius: 15px;
+    padding: 1em;
+    box-shadow: 0px 14px 15px rgb(0, 0, 0, .05);
+
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  .step-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 2.5em 6em 1.3em 6em;
+  }
+
+  @media(width <= 990px) {
+    .step-content {
+      padding: 1em;
+    }
+  }
+
+  @media(width <= 780px) {
+    .multi-step-form {
+      padding: 6em 0em 7em 0em;
+    }
+
+    .step-content {
+      padding: 1em;
+      position: static;
+    }
+  }
+</style>

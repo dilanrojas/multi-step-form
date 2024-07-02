@@ -1,0 +1,249 @@
+<div class="step-page step-2">
+  <div class="step-title">
+    <h1>Select your plan</h1>
+    <p>You have the option of monthly or yearly biling.</p>
+  </div>
+  <div class="step-main">
+    <div class="cards-wrapper">
+      <div class="card card-active arcade">
+        <img src="/icon-arcade.svg" alt="Ícono de arcade">
+        <div class="card-content">
+          <h1 class="plan-title">Arcade</h1>
+          <span class="arcade-price price"></span>
+          <span class="plan-offer offer"></span>
+        </div>
+      </div>
+      <div class="card advanced">
+        <img src="/icon-advanced.svg" alt="Ícono de advanced">
+        <div class="card-content">
+          <h1 class="plan-title">Advanced</h1>
+          <span class="advanced-price price"></span>
+          <span class="plan-offer offer"></span>
+        </div>
+      </div>
+      <div class="card pro">
+        <img src="/icon-pro.svg" alt="Ícono de pro">
+        <div class="card-content">
+          <h1 class="plan-title">Pro</h1>
+          <span class="pro-price price"></span>
+          <span class="plan-offer offer"></span>
+        </div>
+      </div>
+    </div>
+    <div class="plan-switch-wrapper">
+      <p class="plan-active monthly">Monthly</p>
+      <div class="plan-switcher">
+        <span class="switch"></span>
+      </div>
+      <p class="yearly">Yearly</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-2 {
+    display: none;
+  }
+  
+  .step-title {
+    margin-bottom: 2.8em;
+  }
+
+  .step-title h1 {
+    color: var(--marine-blue);
+    font-size: 2em;
+    margin-bottom: .3em;
+  }
+
+  .step-title p {
+    color: var(--darker);
+  }
+
+  .cards-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 2em;
+  }
+
+  .card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    border: 1px solid hsl(225, 7%, 77%);
+    background-color: var(--alabaster);
+    width: 8em;
+    height: 11em;
+    padding: 1em;
+    border-radius: 8px;
+    transition: border .2s ease;
+  }
+
+  .card:hover,
+  .card.card-active {
+    border: 1px solid var(--accent)
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: .2em;
+  }
+
+  .card-content h1 {
+    font-size: 1.1em;
+    color: var(--marine-blue);
+    margin-bottom: .06em;
+    font-weight: 500;
+  }
+
+  .card-content .price {
+    color: var(--darker);
+    font-size: .95em;
+  }
+
+  .card-content .offer {
+    color: var(--marine-blue);
+    font-size: .83em;
+  }
+
+  .plan-switch-wrapper {
+    background-color: var(--alabaster);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 2em;
+    padding: .8em;
+    border-radius: 10px;
+  }
+
+  .plan-switch-wrapper p {
+    color: var(--darker);
+    transition: color .2s ease;
+  }
+
+  .plan-switcher {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: var(--marine-blue);
+    width: 2.3em;
+    height: 1.1em;
+    border-radius: 10px;
+  }
+
+  .switch {
+    left: 0%;
+    margin-inline: .2em;
+    position: absolute;
+    background-color: var(--white);
+    width: .7em;
+    height: .7em;
+    border-radius: 100%;
+    transition: left .2s ease;
+  }
+
+  .plan-switcher[aria-checked] .switch {
+    left: 52%;
+  }
+
+  .plan-active {
+    color: var(--marine-blue)!important;
+  }
+
+  @media(width <= 780px) {
+    .cards-wrapper {
+      flex-direction: column;
+    }
+
+    .card {
+      flex-direction: row;
+      gap: 1em;
+      height: auto;
+      justify-content: start;
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  import { plans } from "../../pricing.json"
+
+  const monthlyPlan = document.querySelector(".monthly")
+  const yearlyPlan = document.querySelector(".yearly")
+  const switcher = document.querySelector(".plan-switcher")
+  const cards = document.querySelectorAll(".card")
+
+  const cardContent = document.querySelectorAll<HTMLElement>(".card-content")
+  const arcadePrice = document.querySelector(".arcade-price") as HTMLElement
+  const advancedPrice = document.querySelector(".advanced-price") as HTMLElement
+  const proPrice = document.querySelector(".pro-price") as HTMLElement
+  const planOffer = document.querySelectorAll<HTMLElement>(".plan-offer")
+
+  function monthlyPlans() {
+    arcadePrice.textContent = plans.monthly.arcade.price + "/mo"
+    advancedPrice.textContent = plans.monthly.advanced.price + "/mo"
+    proPrice.textContent = plans.monthly.pro.price + "/mo"
+    planOffer.forEach(element => {
+      element.textContent = ""
+    })
+  }
+
+  function yearlyPlans() {
+    arcadePrice.textContent = plans.yearly.arcade.price + "/yr"
+    advancedPrice.textContent = plans.yearly.advanced.price + "/yr"
+    proPrice.textContent = plans.yearly.pro.price + "/yr"
+    planOffer.forEach(element => {
+      element.textContent = plans.offer
+    })
+  }
+
+  function changeToMonthly() {
+    cardContent.forEach(content => {
+      content.style.animation = "fadeOut .2s ease"
+      content.addEventListener("animationend", () => {
+        monthlyPlans()
+        content.style.animation = "fadeIn .2s ease"
+      })
+    })
+  }
+
+  function changeToYearly() {
+    cardContent.forEach(content => {
+      content.style.animation = "fadeOut .2s ease"
+      content.addEventListener("animationend", () => {
+        yearlyPlans()
+        content.style.animation = "fadeIn .2s ease"
+      })
+    })
+  }
+
+  switcher.addEventListener("click", () => {
+    switcher.toggleAttribute("aria-checked")
+    if (monthlyPlan.classList.contains("plan-active")) {
+      monthlyPlan.classList.remove("plan-active")
+      yearlyPlan.classList.add("plan-active")
+      changeToYearly()
+    } else {
+      yearlyPlan.classList.remove("plan-active")
+      monthlyPlan.classList.add("plan-active")
+      changeToMonthly()
+    }
+  })
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      cards.forEach(card => {
+        if (card.classList.contains("card-active")) {
+          card.classList.remove("card-active")
+        }
+      })
+      card.classList.add("card-active")
+    })
+  })
+
+  monthlyPlans()
+</script>

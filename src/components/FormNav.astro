@@ -1,0 +1,277 @@
+<div class="form-nav-wrapper">
+  <nav class="form-nav" aria-details="first">
+    <button class="button-back">Go Back</button>
+    <button class="button button-next" disabled>Next Step</button>
+    <button class="button button-confirm">Confirm</button>
+  </nav>
+</div>
+
+<style>
+  .form-nav-wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-inline: 6em;
+  }
+
+  .form-nav {
+    display: flex;
+    width: 100%;
+  }
+
+  .form-nav:where([aria-details="first"]) {
+    justify-content: end;
+
+    & > button:nth-child(1), button:nth-child(3) {
+      display: none;
+    }
+  }
+
+  .form-nav:where([aria-details="step"]) {
+    justify-content: space-between;
+
+    & > button:nth-child(3) {
+      display: none;
+    }
+  }
+
+  .form-nav:where([aria-details="last"]) {
+    justify-content: space-between;
+
+    & > button:nth-child(2) {
+      display: none;
+    }
+  }
+
+  .form-nav > button {
+    border: 0;
+  }
+  
+  .button-back {
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--darker);
+    transition: color .1s ease;
+  }
+
+  .button-back:hover {
+    color: var(--marine-blue)
+  }
+
+  .button {
+    cursor: pointer;
+    color: var(--white);
+    width: 120px;
+    height: 45px;
+    border-radius: 7px;
+    transition: background-color .1s ease, opacity .1s ease;
+  }
+
+  .button-next {
+    background-color: var(--marine-blue);
+  }
+
+  .button-next:hover {
+    background-color: rgb(23, 75, 135);
+  }
+
+  .button-confirm {
+    background-color: var(--purplish-blue);
+  }
+
+  .button-confirm:hover {
+    opacity: .7;
+  }
+
+  @media(width <= 780px) {
+    .form-nav-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1em;
+      background-color: var(--white);
+      overflow: hidden;
+    }
+  }
+</style>
+
+<script>
+  import { addOns } from "../../pricing.json"
+
+  const steps = document.querySelectorAll(".form-step")
+  const btnsBack = document.querySelectorAll(".button-back")
+  const btnsNext = document.querySelectorAll(".button-next")
+  const btnsConfirm = document.querySelectorAll(".button-confirm")
+
+  const formNav = document.querySelector(".form-nav") as HTMLElement
+  const stepPages = document.querySelectorAll<HTMLElement>(".step-page")
+
+  function updateNav() {
+    let activeStep = parseInt(document.querySelector(".active-step").id)
+
+    if (activeStep == 1) {
+      formNav.setAttribute("aria-details", "first")
+    } else if (activeStep == 2) {
+      formNav.setAttribute("aria-details", "step")
+    } else if (activeStep == 3) {
+      formNav.setAttribute("aria-details", "step")
+    } else if (activeStep == 4) {
+      formNav.setAttribute("aria-details", "last")
+    }
+  }
+
+  btnsNext.forEach(button => {
+    button.addEventListener("click", () => {
+        let currentStep = parseInt(document.querySelector(".active-step").id)
+
+        if (currentStep != 4) {
+          let nextStep = (currentStep + 1).toString()
+          steps.forEach(step => {
+            if (step.classList.contains("active-step")) {
+              step.classList.remove("active-step")
+            }
+            if (step.id.includes(nextStep)) {
+              step.classList.add("active-step")
+            }
+          })
+          stepPages.forEach(page => {
+            if (page.classList.contains("active-page")) {
+              page.style.animation = "slideUpOut .25s forwards"
+              page.addEventListener("animationend", () => {
+                page.classList.remove("active-page")
+                stepPages.forEach(element => {
+                  if (element.classList.contains("step-" + nextStep)) {
+                    element.classList.add("active-page")
+                    element.style.animation = "slideUpIn .25s forwards"
+                  } else {
+                    element.classList.remove("active-page")
+                  }
+                })
+              }, {once: true})
+            }
+          })
+        }
+        if (currentStep = 3) {
+          const onlineService = document.querySelector(".online-service-price") as HTMLElement
+          const largerStorage = document.querySelector(".larger-storage-price") as HTMLElement
+          const customizableProfile = document.querySelector(".customizable-profile-price") as HTMLElement
+
+          if (document.querySelector(".plan-active").textContent == "Monthly") {
+            onlineService.textContent = addOns.monthly.onlineService
+            largerStorage.textContent = addOns.monthly.largerStorage
+            customizableProfile.textContent = addOns.monthly.customizableProfile
+          } else {
+            onlineService.textContent = addOns.yearly.onlineService
+            largerStorage.textContent = addOns.yearly.largerStorage
+            customizableProfile.textContent = addOns.yearly.customizableProfile
+          }
+        }
+        if (currentStep = 4) {
+          const userPlan = document.querySelector(".user-selected-plan")
+          const planInfo = document.querySelector(".plan-active").textContent
+          const selPlan = document.querySelector(".card-active h1").textContent
+          const onlineService = document.querySelector(".online-service") as HTMLElement
+          const largerStorage = document.querySelector(".larger-storage") as HTMLElement
+          const customizableProfile = document.querySelector(".customizable-profile") as HTMLElement
+          const userPlanPrice = document.querySelector(".user-plan-price") as HTMLElement
+          const planTotalPrice = document.querySelector(".plan-total")
+          
+          userPlan.textContent = selPlan + ` (${planInfo})`
+          userPlanPrice.textContent = document.querySelector(".card-active .price").textContent
+          if(document.querySelector(".online-service-card").hasAttribute("aria-checked")) {
+            onlineService.textContent = "+" + document.querySelector(".online-service-price").textContent
+          } else {
+            onlineService.textContent = "+$0"
+          }
+
+          if(document.querySelector(".larger-storage-card").hasAttribute("aria-checked")) {
+            largerStorage.textContent = "+" + document.querySelector(".larger-storage-price").textContent
+          } else {
+            largerStorage.textContent = "+$0"
+          }
+
+          if(document.querySelector(".customizable-profile-card").hasAttribute("aria-checked")) {
+            customizableProfile.textContent = "+" + document.querySelector(".customizable-profile-price").textContent
+          } else {
+            customizableProfile.textContent = "+$0"
+          }
+
+          const getPrice = element => Number(element.textContent.match(/\d+/)[0]);
+          const planPricing = getPrice(userPlanPrice);
+          const onlineServicePricing = getPrice(onlineService);
+          const largerStoragePricing = getPrice(largerStorage);
+          const customizableProfilePricing = getPrice(customizableProfile);
+
+          let planPay
+          if(document.querySelector(".plan-active").textContent == "Monthly") {
+            planPay = "/mo"
+          } else {
+            planPay = "/yr"
+          }
+
+          const totalPricing = planPricing + onlineServicePricing + largerStoragePricing + customizableProfilePricing;
+          planTotalPrice.textContent = `$${totalPricing.toString()}${planPay}`
+        }
+
+        updateNav()
+
+      })
+  })
+
+  btnsBack.forEach(button => {
+    button.addEventListener("click", () => {
+      let currentStep = parseInt(document.querySelector(".active-step").id)
+      if (currentStep != 1) {
+        let previousStep = (currentStep - 1).toString()
+        steps.forEach(step => {
+          if (step.classList.contains("active-step")) {
+            step.classList.remove("active-step")
+          }
+          if (step.id.includes(previousStep)) {
+            step.classList.add("active-step")
+          }
+        })
+        stepPages.forEach(page => {
+          if (page.classList.contains("active-page")) {
+            page.style.animation = "slideDownOut .25s forwards"
+            page.addEventListener("animationend", () => {
+              page.classList.remove("active-page")
+              stepPages.forEach(element => {
+                if (element.classList.contains("step-" + previousStep)) {
+                  element.classList.add("active-page")
+                  element.style.animation = "slideDownIn .25s forwards"
+                } else {
+                  element.classList.remove("active-page")
+                }
+              })
+            }, {once: true})
+          }
+        })
+      }
+
+      updateNav()
+
+    })
+  })
+
+  btnsConfirm.forEach(button => {
+    button.addEventListener("click", () => {
+      const page4 = document.querySelector(".step-4") as HTMLElement
+      const thanks = document.querySelector(".thanks-wrapper") as HTMLElement
+      
+      formNav.style.animation = "fadeOut .35s forwards"
+      formNav.addEventListener("animationend", () => {
+        formNav.style.display = "none"
+      })
+
+      page4.style.animation = "fadeOut .35s forwards"
+      page4.addEventListener("animationend", () => {
+        page4.style.display = "none"
+        page4.classList.remove("active-page")
+        thanks.classList.add("active-page")
+        thanks.style.animation = "fadeIn .35s forwards"
+      })
+    })
+  })
+</script>

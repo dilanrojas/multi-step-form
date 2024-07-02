@@ -1,0 +1,173 @@
+<div class="step-page step-4">
+  <div class="step-title">
+    <h1>Finishing up</h1>
+    <p>Double-check everything looks OK before confirming.</p>
+  </div>
+
+  <div class="step-main">
+
+    <div class="user-selected-plan-desc">
+      <div class="user-plan-heading">
+        <div class="user-plan-title">
+          <h1 class="user-selected-plan"></h1>
+          <p class="change-plan">Change</p>
+        </div>
+        <div class="user-plan-price-wrapper">
+          <span class="user-plan-price"></span>
+        </div>
+      </div>
+  
+      <hr>
+  
+      <div class="user-selected-addons flow" style="--flow-space: 1.3em;">
+        <div class="selected-addon">
+          <p class="add-on-name">Online service</p>
+          <span class="online-service add-on-price"></span>
+        </div>
+        <div class="selected-addon">
+          <p class="add-on-name">Larger storage</p>
+          <span class="larger-storage add-on-price"></span>
+        </div>
+        <div class="selected-addon">
+          <p class="add-on-name">Customizable profile</p>
+          <span class="customizable-profile add-on-price"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-plan-total">
+      <p class="total-plan">Total</p>
+      <span class="plan-total"></span>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .step-4 {
+    display: none;
+  }
+  
+  .step-title {
+    margin-bottom: 2.8em;
+  }
+
+  .step-title h1 {
+    color: var(--marine-blue);
+    font-size: 2em;
+    margin-bottom: .3em;
+  }
+
+  .step-title p {
+    color: var(--darker);
+  }
+
+  .user-selected-plan-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+    background-color: #f8f9fe;
+    padding: 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 1.5em;
+  }
+
+  .user-plan-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user-selected-plan {
+    font-size: 1.1rem;
+    color: var(--marine-blue);
+    margin-bottom: .3em;
+  }
+  
+  .change-plan {
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--cool-gray)
+  }
+
+  .user-plan-price {
+    color: var(--marine-blue);
+    font-weight: 600;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid rgb(0, 0, 0, .1)
+  }
+
+  .selected-addon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .add-on-name {
+    color: var(--cool-gray)
+  }
+
+  .add-on-price {
+    color: var(--marine-blue);
+    font-weight: 500;
+  }
+
+  .user-plan-total {
+    padding-inline: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-plan {
+    color: var(--cool-gray)
+  }
+
+  .plan-total {
+    color: var(--purplish-blue);
+    font-size: 1.3rem;
+    font-weight: 600
+  }
+
+  @media(width <= 520px) {
+    .user-selected-plan-desc {
+      font-size: .9em;
+    }
+
+    .user-selected-plan {
+      font-size: 1.1em;
+    }
+
+    .user-plan-total {
+      font-size: .9em;
+    }
+
+    .plan-total {
+      font-size: 1.2em;
+    }
+  }
+</style>
+
+<script>
+  const planChange = document.querySelector(".change-plan")
+
+  planChange.addEventListener("click", () => {
+    const activePage = document.querySelector(".active-page") as HTMLElement
+    const activeStep = document.querySelector(".active-step") as HTMLElement
+    const step2 = document.querySelector(".step-2") as HTMLElement
+    const step2Form = document.getElementById("2")
+
+    activePage.style.animation = "slideDownOut .25s forwards"
+    activePage.addEventListener("animationend", () => {
+      activePage.classList.remove("active-page")
+      step2.classList.add("active-page")
+      step2.style.animation = "slideUpIn .25s forwards"
+
+      activeStep.classList.remove("active-step")
+      step2Form.classList.add("active-step")
+    }, {once: true})
+  })
+</script>

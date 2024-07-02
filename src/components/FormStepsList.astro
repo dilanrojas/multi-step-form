@@ -1,0 +1,140 @@
+<aside class="form-steps-wrapper">
+  <div class="form-steps-content">    
+    <div class="form-steps">
+      <ol class="form-steps-list">
+        <li id="1" class="form-step active-step">
+          <div>
+            <span>Step 1</span>
+            <p>Your info</p>
+          </div>
+        </li>
+        <li id="2" class="form-step">
+          <div>
+            <span>Step 2</span>
+            <p>Select plan</p>
+          </div>
+        </li>
+        <li id="3" class="form-step">
+          <div>
+            <span>Step 3</span>
+            <p>Add-ons</p>
+          </div>
+        </li>
+        <li id="4" class="form-step">
+          <div>
+            <span>Step 4</span>
+            <p>Summary</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <img src="/bg-sidebar-desktop.svg" alt="Ilustración del formulario">
+  </div>
+</aside>
+
+<style>
+  .form-steps-wrapper {
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    z-index: 40;
+  }
+
+  .form-steps-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .form-steps {
+    position: absolute;
+    padding: 2em 1.8em;
+    z-index: 50;
+  }
+
+  .form-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em
+  }
+
+  .form-steps-list li {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    text-transform: uppercase;
+    counter-increment: step;
+    color: var(--white)
+  }
+
+  .form-step > div span {
+    color: var(--txt-secondary);
+    font-size: .85em;
+    font-weight: 300;
+  }
+
+  .form-step > div p {
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  .form-step::before {
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 100%;
+    border: 1px solid var(--white);
+    height: 35px;
+    width: 35px;
+    transition: background-color .3s ease,
+                border .3s ease,
+                color .3s ease;
+  }
+
+  .active-step::before {
+    border: 1px solid var(--pastel-blue)!important;
+    background-color: var(--pastel-blue);
+    color: var(--dark);
+  }
+
+  @media(width <= 780px) {
+    .form-steps-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1
+    }
+
+    .form-steps-content {
+      display: flex;
+      justify-content: center
+    }
+
+    .form-steps-list {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+    }
+
+    li > div {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      content: url("/bg-sidebar-mobile.svg");
+      object-fit: contain;
+    }
+  }
+</style>
