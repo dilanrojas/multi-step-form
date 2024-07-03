@@ -159,6 +159,7 @@
     const activeStep = document.querySelector(".active-step") as HTMLElement
     const step2 = document.querySelector(".step-2") as HTMLElement
     const step2Form = document.getElementById("2")
+    document.querySelector(".form-nav").setAttribute("aria-details", "step")
 
     activePage.style.animation = "slideDownOut .25s forwards"
     activePage.addEventListener("animationend", () => {
