@@ -259,10 +259,11 @@
     button.addEventListener("click", () => {
       const page4 = document.querySelector(".step-4") as HTMLElement
       const thanks = document.querySelector(".thanks-wrapper") as HTMLElement
-      
-      formNav.style.animation = "fadeOut .35s forwards"
-      formNav.addEventListener("animationend", () => {
-        formNav.style.display = "none"
+
+      const formWrapper = document.querySelector(".form-nav-wrapper") as HTMLElement
+      formWrapper.style.animation = "fadeOut .35s forwards"
+      formWrapper.addEventListener("animationend", () => {
+        formWrapper.style.display = "none"
       })
 
       page4.style.animation = "fadeOut .35s forwards"
